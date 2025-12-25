@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chemical Products</title>
+</head>
+<body>
+    <h2>Add Chemical Product</h2>
+
+    <form method="POST">
+        <label>Product Name:</label><br>
+        <input type="text" name="name" required><br><br>
+
+        <label>CAS Number:</label><br>
+        <input type="text" name="cas_number" required><br><br>
+
+        <label>Unit:</label><br>
+        <select name="unit" required>
+            <option value="KG">KG</option>
+            <option value="MT">MT</option>
+            <option value="Litre">Litre</option>
+        </select><br><br>
+
+        <button type="submit">Add Product</button>
+    </form>
+
+    <hr>
+
+    <h2>Product List</h2>
+
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Name</th>
+            <th>CAS Number</th>
+            <th>Unit</th>
+        </tr>
+
+        {% for product in products %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.cas_number }}</td>
+            <td>{{ product.unit }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

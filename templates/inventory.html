@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory</title>
+</head>
+<body>
+    <h2>Inventory List</h2>
+
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Product</th>
+            <th>Current Stock</th>
+            <th>Unit</th>
+            <th>Action</th>
+        </tr>
+
+        {% for item in inventory %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.current_stock }}</td>
+            <td>{{ item.product.unit }}</td>
+            <td>
+                <form method="POST" action="/update-stock/{{ item.id }}">
+                    <input type="number" step="0.01" name="quantity" required>
+                    <select name="type">
+                        <option value="IN">IN</option>
+                        <option value="OUT">OUT</option>
+                    </select>
+                    <button type="submit">Update</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
