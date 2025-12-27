@@ -4,6 +4,7 @@
     <title>Chemical Products</title>
 </head>
 <body>
+
     <h2>Add Chemical Product</h2>
 
     <form method="POST">
@@ -32,6 +33,7 @@
             <th>Name</th>
             <th>CAS Number</th>
             <th>Unit</th>
+            <th>Action</th>
         </tr>
 
         {% for product in products %}
@@ -39,8 +41,18 @@
             <td>{{ product.name }}</td>
             <td>{{ product.cas_number }}</td>
             <td>{{ product.unit }}</td>
+            <td>
+                <form action="/delete-product/{{ product.id }}" method="POST"
+                      onsubmit="return confirm('Are you sure you want to delete this product?');">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </table>
+
+    <br>
+    <a href="/inventory">View Inventory</a>
+
 </body>
 </html>

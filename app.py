@@ -74,6 +74,20 @@ def update_stock(inventory_id):
     db.session.commit()
     return redirect('/inventory')
 
+@app.route('/delete-product/<int:product_id>', methods=['POST'])
+def delete_product(product_id):
+    product = ChemicalProduct.query.get_or_404(product_id)
+
+    # Delete related inventory first (important!)
+    inventory = Inventory.query.filter_by(product_id=product.id).first()
+    if inventory:
+        db.session.delete(inventory)
+
+    db.session.delete(product)
+    db.session.commit()
+
+    return redirect('/products')
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()   # creates tables
