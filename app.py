@@ -14,9 +14,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Initialize DB
 db.init_app(app)
 
+from flask import redirect, url_for
+
 @app.route('/')
 def home():
-    return "Inventory Management System Running!"
+    return render_template('index.html')
+
 
 @app.route('/products', methods=['GET', 'POST'])
 def products():
