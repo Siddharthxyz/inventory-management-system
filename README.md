@@ -36,3 +36,9 @@ CRUD operations and stock tracking.
 ```bash
 git clone <your-repository-url>
 cd inventory_management_system
+
+## Live Demo
+🔗 https://inventory-management-system-iqya.onrender.com
+
+⚠️ Note: This app is hosted on Render Free tier.
+The first request may take 30–50 seconds to wake up the server.
