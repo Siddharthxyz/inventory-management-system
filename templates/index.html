@@ -2,13 +2,29 @@
 <html>
 <head>
     <title>Inventory Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Inventory Management System</h1>
 
-    <ul>
-        <li><a href="/products">Manage Products</a></li>
-        <li><a href="/inventory">View Inventory</a></li>
-    </ul>
+<div class="container center">
+    <h1>📦 Inventory Management System</h1>
+
+    <p class="subtitle">
+        A simple system to manage chemical products and track inventory stock efficiently.
+    </p>
+
+    <div class="card-grid">
+        <a href="/products" class="card">
+            <h3>🧪 Manage Products</h3>
+            <p>Add, view, search, and delete chemical products</p>
+        </a>
+
+        <a href="/inventory" class="card">
+            <h3>📊 View Inventory</h3>
+            <p>Track stock levels and update inventory</p>
+        </a>
+    </div>
+</div>
+
 </body>
 </html>

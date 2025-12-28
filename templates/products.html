@@ -2,8 +2,13 @@
 <html>
 <head>
     <title>Chemical Products</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+<div class="container">
 
     <h2>Add Chemical Product</h2>
 
@@ -37,7 +42,7 @@
 
     <h2>Product List</h2>
 
-    <table border="1" cellpadding="8">
+    <table>
         <tr>
             <th>Name</th>
             <th>CAS Number</th>
@@ -61,7 +66,9 @@
     </table>
 
     <br>
-    <a href="/inventory">View Inventory</a>
+    <a href="/inventory">📊 View Inventory</a>
+
+</div>
 
 </body>
 </html>

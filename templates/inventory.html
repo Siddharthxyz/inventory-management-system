@@ -2,12 +2,17 @@
 <html>
 <head>
     <title>Inventory</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
+<div class="container">
+
     <h2>Inventory List</h2>
 
-    <table border="1" cellpadding="8">
+    <table>
         <tr>
             <th>Product</th>
             <th>Current Stock</th>
@@ -25,9 +30,9 @@
             <!-- LOW STOCK INDICATOR -->
             <td>
                 {% if item.current_stock < 5 %}
-                    <span style="color:red; font-weight:bold;">LOW</span>
+                    <span class="low">LOW</span>
                 {% else %}
-                    <span style="color:green;">OK</span>
+                    <span class="ok">OK</span>
                 {% endif %}
             </td>
 
@@ -46,7 +51,9 @@
     </table>
 
     <br>
-    <a href="/products">Back to Products</a>
+    <a href="/products">⬅ Back to Products</a>
+
+</div>
 
 </body>
 </html>
