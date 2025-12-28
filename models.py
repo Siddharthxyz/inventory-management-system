@@ -19,3 +19,14 @@ class Inventory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('chemical_product.id'))
     current_stock = db.Column(db.Float, default=0)
+
+from datetime import datetime
+
+class StockMovement(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('chemical_product.id'))
+    movement_type = db.Column(db.String(10))  # IN or OUT
+    quantity = db.Column(db.Float)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    product = db.relationship('ChemicalProduct')

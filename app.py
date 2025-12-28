@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
 
-from models import db, ChemicalProduct, Inventory
+from models import db, ChemicalProduct, Inventory ,StockMovement
 
 app = Flask(__name__)
 
@@ -86,9 +86,22 @@ def update_stock(inventory_id):
             return "Stock cannot go below zero"
         item.current_stock -= quantity
 
+    # SAVE STOCK MOVEMENT HISTORY
+    movement = StockMovement(
+        product_id=item.product_id,
+        movement_type=action,
+        quantity=quantity
+    )
+    db.session.add(movement)
+
     db.session.commit()
     return redirect('/inventory')
 
+# ---------------- STOCK MOVEMENT HISTORY ----------------
+@app.route('/stock-history')
+def stock_history():
+    history = StockMovement.query.order_by(StockMovement.timestamp.desc()).all()
+    return render_template('stock_history.html', history=history)
 
 # ---------------- DELETE PRODUCT ----------------
 @app.route('/delete-product/<int:product_id>', methods=['POST'])

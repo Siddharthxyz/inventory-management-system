@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Movement History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h2>Stock Movement History</h2>
+
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Type</th>
+            <th>Quantity</th>
+            <th>Date & Time</th>
+        </tr>
+
+        {% for move in history %}
+        <tr>
+            <td>{{ move.product.name }}</td>
+            <td>{{ move.movement_type }}</td>
+            <td>{{ move.quantity }}</td>
+            <td>{{ move.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="/inventory">⬅ Back to Inventory</a>
+</div>
+
+</body>
+</html>
