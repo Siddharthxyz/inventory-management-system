@@ -1,29 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Inventory Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Main CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
 <div class="container center">
-    <h1>📦 Inventory Management System</h1>
 
+    <!-- HEADER -->
+    <h1>📦 Inventory Management System</h1>
     <p class="subtitle">
-        A simple system to manage chemical products and track inventory stock efficiently.
+        Manage chemical products, monitor stock levels, and maintain accurate inventory records.
     </p>
 
+    <!-- DASHBOARD CARDS -->
     <div class="card-grid">
+
         <a href="/products" class="card">
-            <h3>🧪 Manage Products</h3>
-            <p>Add, view, search, and delete chemical products</p>
+            <h3>🧪 Product Management</h3>
+            <p>
+                Add new chemical products, search by name or CAS number,
+                and manage product records.
+            </p>
         </a>
 
         <a href="/inventory" class="card">
-            <h3>📊 View Inventory</h3>
-            <p>Track stock levels and update inventory</p>
+            <h3>📊 Inventory Tracking</h3>
+            <p>
+                View current stock levels, perform stock IN / OUT operations,
+                and identify low-stock items.
+            </p>
         </a>
+
     </div>
+
+    <!-- FOOTER NOTE -->
+    <p style="margin-top: 40px; font-size: 14px; color: #64748b;">
+        Built using Flask, SQLite, and HTML/CSS • Deployed on Render
+    </p>
+
 </div>
 
 </body>

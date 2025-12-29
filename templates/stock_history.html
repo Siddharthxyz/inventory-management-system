@@ -1,34 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Stock Movement History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
 <div class="container">
-    <h2>Stock Movement History</h2>
 
+    <!-- PAGE HEADER -->
+    <h2>📜 Stock Movement History</h2>
+    <p class="subtitle">
+        Complete audit trail of all inventory stock movements (IN / OUT).
+    </p>
+
+    <!-- HISTORY TABLE -->
+    {% if history %}
     <table>
-        <tr>
-            <th>Product</th>
-            <th>Type</th>
-            <th>Quantity</th>
-            <th>Date & Time</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Movement</th>
+                <th>Quantity</th>
+                <th>Date & Time</th>
+            </tr>
+        </thead>
 
+        <tbody>
         {% for move in history %}
-        <tr>
-            <td>{{ move.product.name }}</td>
-            <td>{{ move.movement_type }}</td>
-            <td>{{ move.quantity }}</td>
-            <td>{{ move.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+            <tr>
+                <td>{{ move.product.name }}</td>
 
-    <br>
-    <a href="/inventory">⬅ Back to Inventory</a>
+                <td>
+                    {% if move.movement_type == 'IN' %}
+                        <span class="badge ok">IN</span>
+                    {% else %}
+                        <span class="badge low">OUT</span>
+                    {% endif %}
+                </td>
+
+                <td>{{ move.quantity }}</td>
+                <td>{{ move.timestamp.strftime('%d %b %Y, %I:%M %p') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p style="margin-top: 20px; color: #64748b;">
+            No stock movements recorded yet.
+        </p>
+    {% endif %}
+
+    <!-- NAVIGATION -->
+    <div style="margin-top: 30px;">
+        <a href="/inventory">⬅ Back to Inventory</a> |
+        <a href="/products">🧪 Products</a> |
+        <a href="/">🏠 Dashboard</a>
+    </div>
+
 </div>
 
 </body>

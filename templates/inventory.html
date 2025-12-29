@@ -1,56 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Inventory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
 <div class="container">
 
-    <h2>Inventory List</h2>
+    <!-- PAGE HEADER -->
+    <h2>📦 Inventory Overview</h2>
+    <p class="subtitle">
+        Monitor stock levels and perform stock IN / OUT operations.
+    </p>
 
+    <!-- INVENTORY TABLE -->
+    {% if inventory %}
     <table>
-        <tr>
-            <th>Product</th>
-            <th>Current Stock</th>
-            <th>Unit</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Current Stock</th>
+                <th>Unit</th>
+                <th>Status</th>
+                <th>Update Stock</th>
+            </tr>
+        </thead>
 
+        <tbody>
         {% for item in inventory %}
-        <tr>
-            <td>{{ item.product.name }}</td>
-            <td>{{ item.current_stock }}</td>
-            <td>{{ item.product.unit }}</td>
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.current_stock }}</td>
+                <td>{{ item.product.unit }}</td>
 
-            <td>
-                {% if item.current_stock < 5 %}
-                    <span class="badge low">LOW</span>
-                {% else %}
-                    <span class="badge ok">OK</span>
-                {% endif %}
-            </td>
+                <!-- LOW STOCK INDICATOR -->
+                <td>
+                    {% if item.current_stock < 5 %}
+                        <span class="badge low">LOW</span>
+                    {% else %}
+                        <span class="badge ok">OK</span>
+                    {% endif %}
+                </td>
 
-            <td>
-                <form method="POST" action="/update-stock/{{ item.id }}" class="inline-form">
-                    <input type="number" step="0.01" name="quantity" required>
-                    <select name="type">
-                        <option value="IN">IN</option>
-                        <option value="OUT">OUT</option>
-                    </select>
-                    <button type="submit">Update</button>
-                </form>
-            </td>
-        </tr>
+                <!-- STOCK UPDATE FORM -->
+                <td>
+                    <form method="POST"
+                          action="/update-stock/{{ item.id }}"
+                          style="display:flex; gap:8px; align-items:center;">
+
+                        <input type="number"
+                               step="0.01"
+                               name="quantity"
+                               placeholder="Qty"
+                               required
+                               style="max-width:90px;">
+
+                        <select name="type" style="max-width:80px;">
+                            <option value="IN">IN</option>
+                            <option value="OUT">OUT</option>
+                        </select>
+
+                        <button type="submit">
+                            Update
+                        </button>
+                    </form>
+                </td>
+            </tr>
         {% endfor %}
+        </tbody>
     </table>
+    {% else %}
+        <p style="margin-top: 20px; color: #64748b;">
+            No inventory records available.
+        </p>
+    {% endif %}
 
-    <br>
-    <a href="/products">⬅ Back to Products</a>
-    <br><br>
-    <a href="/stock-history">📜 View Stock Movement History</a>
+    <!-- NAVIGATION -->
+    <div style="margin-top: 30px;">
+        <a href="/products">⬅ Back to Products</a> |
+        <a href="/stock-history">📜 Stock Movement History</a> |
+        <a href="/">🏠 Dashboard</a>
+    </div>
 
 </div>
 

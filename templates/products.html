@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Chemical Products</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -10,63 +12,90 @@
 
 <div class="container">
 
-    <h2>Add Chemical Product</h2>
+    <!-- PAGE TITLE -->
+    <h2>🧪 Chemical Products</h2>
+    <p class="subtitle">
+        Add new chemical products, search existing ones, and manage product records.
+    </p>
 
+    <!-- ADD PRODUCT FORM -->
+    <h3>Add New Product</h3>
     <form method="POST">
-        <label>Product Name:</label><br>
-        <input type="text" name="name" required><br><br>
+        <label>Product Name</label>
+        <input type="text" name="name" placeholder="e.g. Acetone" required>
 
-        <label>CAS Number:</label><br>
-        <input type="text" name="cas_number" required><br><br>
+        <label>CAS Number</label>
+        <input type="text" name="cas_number" placeholder="e.g. 67-64-1" required>
 
-        <label>Unit:</label><br>
+        <label>Unit of Measurement</label>
         <select name="unit" required>
             <option value="KG">KG</option>
             <option value="MT">MT</option>
             <option value="Litre">Litre</option>
-        </select><br><br>
+        </select>
 
-        <button type="submit">Add Product</button>
+        <button type="submit" style="margin-top: 15px;">
+            ➕ Add Product
+        </button>
     </form>
 
     <hr>
 
-    <!-- 🔍 SEARCH FEATURE -->
-    <h3>Search Products</h3>
+    <!-- SEARCH -->
+    <h3>🔍 Search Products</h3>
     <form method="GET" action="/products">
-        <input type="text" name="search" placeholder="Search by Name or CAS">
+        <input type="text"
+               name="search"
+               placeholder="Search by product name or CAS number"
+               value="{{ request.args.get('search', '') }}">
         <button type="submit">Search</button>
     </form>
 
     <hr>
 
-    <h2>Product List</h2>
+    <!-- PRODUCT TABLE -->
+    <h3>📋 Product List</h3>
 
+    {% if products %}
     <table>
-        <tr>
-            <th>Name</th>
-            <th>CAS Number</th>
-            <th>Unit</th>
-            <th>Action</th>
-        </tr>
-
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>CAS Number</th>
+                <th>Unit</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
         {% for product in products %}
-        <tr>
-            <td>{{ product.name }}</td>
-            <td>{{ product.cas_number }}</td>
-            <td>{{ product.unit }}</td>
-            <td>
-                <form action="/delete-product/{{ product.id }}" method="POST"
-                      onsubmit="return confirm('Are you sure you want to delete this product?');">
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
-        </tr>
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.cas_number }}</td>
+                <td>{{ product.unit }}</td>
+                <td>
+                    <form action="/delete-product/{{ product.id }}"
+                          method="POST"
+                          onsubmit="return confirm('Are you sure you want to delete this product?');">
+                        <button type="submit" style="background:#dc2626;">
+                            🗑 Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
         {% endfor %}
+        </tbody>
     </table>
+    {% else %}
+        <p style="margin-top: 20px; color: #64748b;">
+            No products found.
+        </p>
+    {% endif %}
 
-    <br>
-    <a href="/inventory">📊 View Inventory</a>
+    <!-- NAVIGATION -->
+    <div style="margin-top: 30px;">
+        <a href="/inventory">📊 View Inventory</a> |
+        <a href="/">🏠 Back to Dashboard</a>
+    </div>
 
 </div>
 
