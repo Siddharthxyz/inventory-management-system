@@ -5,7 +5,7 @@
     <title>Stock Movement History</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- CSS -->
+    <!-- Main CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -15,47 +15,58 @@
     <!-- PAGE HEADER -->
     <h2>📜 Stock Movement History</h2>
     <p class="subtitle">
-        Complete audit trail of all inventory stock movements (IN / OUT).
+        A complete audit trail of all inventory stock movements (IN / OUT).
     </p>
 
     <!-- HISTORY TABLE -->
     {% if history %}
-    <table>
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Movement</th>
-                <th>Quantity</th>
-                <th>Date & Time</th>
-            </tr>
-        </thead>
+    <div style="overflow-x:auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Movement</th>
+                    <th>Quantity</th>
+                    <th>Date & Time</th>
+                </tr>
+            </thead>
 
-        <tbody>
-        {% for move in history %}
-            <tr>
-                <td>{{ move.product.name }}</td>
+            <tbody>
+            {% for move in history %}
+                <tr>
+                    <td>{{ move.product.name }}</td>
 
-                <td>
-                    {% if move.movement_type == 'IN' %}
-                        <span class="badge ok">IN</span>
-                    {% else %}
-                        <span class="badge low">OUT</span>
-                    {% endif %}
-                </td>
+                    <td>
+                        {% if move.movement_type == 'IN' %}
+                            <span class="badge ok"
+                                  title="Stock increased">
+                                ➕ IN
+                            </span>
+                        {% else %}
+                            <span class="badge low"
+                                  title="Stock reduced">
+                                ➖ OUT
+                            </span>
+                        {% endif %}
+                    </td>
 
-                <td>{{ move.quantity }}</td>
-                <td>{{ move.timestamp.strftime('%d %b %Y, %I:%M %p') }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    <td>{{ move.quantity }}</td>
+
+                    <td>
+                        {{ move.timestamp.strftime('%d %b %Y, %I:%M %p') }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% else %}
-        <p style="margin-top: 20px; color: #64748b;">
+        <p style="margin-top: 25px; color: #64748b;">
             No stock movements recorded yet.
         </p>
     {% endif %}
 
-    <!-- NAVIGATION -->
+    <!-- FOOTER NAVIGATION -->
     <div style="margin-top: 30px;">
         <a href="/inventory">⬅ Back to Inventory</a> |
         <a href="/products">🧪 Products</a> |
